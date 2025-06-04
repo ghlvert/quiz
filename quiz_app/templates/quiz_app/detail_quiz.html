@@ -3,9 +3,48 @@
 {% block content %}
 <h1>{{question.title}}</h1>
 <h3>{{question.descripiton}}</h3>
-<form action="{% url "question_processing" quiz.id form_num %}" method="POST">{% csrf_token %}
+<form id="quizForm" action="{% url "question_processing" quiz.id form_num %}" method="POST">{% csrf_token %}
     {{ formset.management_form }}
     {{formset.as_p}}
+    
     <input type="submit" value="send">
+    <div id="checkboxError" style="margin-top: 5px; display: none;">Пожалуйста, выберите хотя бы один вариант</div>
 </form>
+
+<script>
+document.getElementById('quizForm').addEventListener('submit', function(e) {
+
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    let atLeastOneChecked = false;
+    
+
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            atLeastOneChecked = true;
+        }
+    });
+    
+
+    if (!atLeastOneChecked) {
+        e.preventDefault();
+        document.getElementById('checkboxError').style.display = 'block';
+        
+
+        document.getElementById('checkboxError').scrollIntoView({ 
+            behavior: 'smooth' 
+        });
+    } else {
+        document.getElementById('checkboxError').style.display = 'none';
+    }
+});
+
+
+document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        if (this.checked) {
+            document.getElementById('checkboxError').style.display = 'none';
+        }
+    });
+});
+</script>
 {% endblock content %}

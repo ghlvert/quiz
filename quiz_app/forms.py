@@ -12,5 +12,5 @@ class VarForm(forms.ModelForm):
         model = Variant
         fields = ['text', 'checked', 'id']
 
-
-FormFactory = forms.inlineformset_factory(Question, Variant, extra=0, form=VarForm, can_delete=False)
+FormFactory = forms.inlineformset_factory(Question, Variant, 
+                                          extra=0, form=VarForm, can_delete=False)

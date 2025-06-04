@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}{{quiz.title}}{% endblock title %}
+{% block content %}
+<h2>Вы прошли тест и набрали</h2>
+<h2>{{right_answers}}/{{quiz.questions.count}} Баллов</h2>
+{% endblock content %}

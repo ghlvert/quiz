@@ -23,7 +23,7 @@ def quiz_detail(request, quiz_id=1):
         collection = QuizCollection(request)
         right_answers = collection.count(quiz.id)
         collection.clear(quiz.id)
-        return HttpResponse(right_answers)
+        return render(request, 'quiz_app/quiz_done.html', {'quiz': quiz, 'right_answers': right_answers})
     else:
         formset = FormFactory(instance=questions[form_num-1])
         for form in formset.forms:
