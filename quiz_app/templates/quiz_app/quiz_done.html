@@ -1,6 +1,17 @@
 {% extends "base.html" %}
+{% load answer_colours %}
 {% block title %}{{quiz.title}}{% endblock title %}
 {% block content %}
 <h2>Вы прошли тест и набрали</h2>
-<h2>{{right_answers}}/{{quiz.questions.count}} Баллов</h2>
+<h2>{{results.amount}}/{{quiz.questions.count}} Баллов</h2>
+{% comment %} {% for question in results.quiz %}
+   <p>{{question}}</p>
+{% endfor %} {% endcomment %}
+{% for question in quiz.questions.all %}
+   <h3>{{question.title}}</h3>
+   {% for variant in question.variants.all %}
+   <p>{{variant.text}} <b>{% get_colour_of_answer variant.id variant.question.id results.user_answers results.right_answers %}</b></p>
+   {% endfor %}
+   <hr>
+{% endfor %}
 {% endblock content %}

@@ -4,7 +4,6 @@ from django.urls import reverse
 
 from quiz_app.forms import FormFactory
 from quiz_app.models import Question, Variant, Quiz
-from formtools.wizard.views import SessionWizardView
 from django.views.decorators.http import require_POST
 
 from quiz_app.quiz_collection import QuizCollection
@@ -21,9 +20,9 @@ def quiz_detail(request, quiz_id=1):
     questions = quiz.questions.all()
     if form_num > questions.count():
         collection = QuizCollection(request)
-        right_answers = collection.count(quiz.id)
+        results = collection.results(quiz.id)
         collection.clear(quiz.id)
-        return render(request, 'quiz_app/quiz_done.html', {'quiz': quiz, 'right_answers': right_answers})
+        return render(request, 'quiz_app/quiz_done.html', {'quiz': quiz, 'results': results})
     else:
         formset = FormFactory(instance=questions[form_num-1])
         for form in formset.forms:
@@ -38,17 +37,14 @@ def question_processing(request, quiz_id=1, question_id=1):
     questions = quiz.questions.all()
     curr_question = questions[question_id-1]
     formset = FormFactory(request.POST, instance=curr_question)
-    right = True
     if formset.is_valid():
-        for form in formset.forms:
-            if not (form.cleaned_data['checked'] == form.initial['checked']):
-                right = False
-                break
-                
-    if right:
+        # for form in formset.forms:
+        #     if not (form.cleaned_data['checked'] == form.initial['checked']):
+        #         right = False
+        #         break
         collection = QuizCollection(request)
-        collection.add_point(quiz.id, curr_question.id)
-        print(collection.count(quiz.id))
+        collection.add_results(quiz.id, curr_question.id, formset)
+        print(collection.results(quiz.id))
         print(collection.collection)
     base_url = reverse("quiz_detail", args=(quiz.id,))
     url = f'{base_url}?num={question_id+1}'

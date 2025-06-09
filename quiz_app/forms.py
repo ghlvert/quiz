@@ -1,5 +1,4 @@
 
-from tabnanny import verbose
 from django import forms
 
 from quiz_app.models import Question, Variant, Quiz
