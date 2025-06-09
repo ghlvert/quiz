@@ -2,16 +2,49 @@
 {% load answer_colours %}
 {% block title %}{{quiz.title}}{% endblock title %}
 {% block content %}
-<h2>Вы прошли тест и набрали</h2>
-<h2>{{results.amount}}/{{quiz.questions.count}} Баллов</h2>
-{% comment %} {% for question in results.quiz %}
-   <p>{{question}}</p>
-{% endfor %} {% endcomment %}
-{% for question in quiz.questions.all %}
-   <h3>{{question.title}}</h3>
-   {% for variant in question.variants.all %}
-   <p>{{variant.text}} <b>{% get_colour_of_answer variant.id variant.question.id results.user_answers results.right_answers %}</b></p>
-   {% endfor %}
-   <hr>
-{% endfor %}
+<div class="results-container">
+    <div class="results-header">
+        <h2>Вы прошли тест на</h2>
+        <div class="results-score">{{results.amount}} из {{quiz.questions.count}} баллов</div>
+    </div>
+
+    <div class="legend">
+        <div class="legend-title">Colours meaning:</div>
+        <div class="legend-item">
+            <div class="legend-color legend-green"></div>
+            <div class="legend-label">Right answer (you chose right)</div>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color legend-red"></div>
+            <div class="legend-label">Wrong answer (you didn't chose)</div>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color legend-purple"></div>
+            <div class="legend-label">Right answer (you didn't chose)</div>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color legend-default"></div>
+            <div class="legend-label">Wrong answer (you didn't chose)</div>
+        </div>
+    </div>
+
+    {% for question in quiz.questions.all %}
+    <div class="question-container variant-{% get_right question.id results.user_answers results.right_answers %}">
+        <h3 class="question-title">{{question.title}}</h3>
+        <h4 class="question-description">{{question.descripiton}}</h4>
+        
+        <div class="variants-list">
+            {% for variant in question.variants.all %}
+            <div class="variant-{% get_colour_of_answer variant.id variant.question.id results.user_answers results.right_answers %}">
+                {{variant.text}}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    {% if not forloop.last %}
+    <hr class="question-separator">
+    {% endif %}
+    {% endfor %}
+</div>
 {% endblock content %}

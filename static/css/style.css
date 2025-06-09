@@ -1,0 +1,492 @@
+/* style.css */
+:root {
+    --primary-color: #4a6fa5;
+    --secondary-color: #166088;
+    --accent-color: #4fc3f7;
+    --background-color: #f8f9fa;
+    --text-color: #333;
+    --light-gray: #e9ecef;
+    --white: #ffffff;
+    --error-color: #e63946;
+    --success-color: #2a9d8f;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    padding: 0;
+    margin: 0;
+}
+
+nav {
+    background-color: var(--primary-color);
+    padding: 1rem 2rem;
+    box-shadow: var(--box-shadow);
+}
+
+nav li {
+    list-style-type: none;
+}
+
+nav a {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: var(--transition);
+}
+
+nav a:hover {
+    color: var(--accent-color);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+h1 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+    font-size: 2.2rem;
+}
+
+h3 {
+    color: var(--primary-color);
+    margin: 1.5rem 0 1rem;
+    font-size: 1.5rem;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+/* Стили для списка опросов */
+.quiz-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.quiz-item {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.quiz-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-item h3 {
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+}
+
+.quiz-item p {
+    color: #666;
+}
+
+/* Стили для формы опроса */
+#quizForm {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-top: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group p {
+    margin-bottom: 0.5rem;
+}
+
+input[type="checkbox"], input[type="radio"] {
+    margin-right: 0.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+}
+
+input[type="submit"] {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+input[type="submit"]:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+#checkboxError {
+    color: var(--error-color);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .quiz-list {
+        grid-template-columns: 1fr;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    h3 {
+        font-size: 1.3rem;
+    }
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.quiz-item, #quizForm {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Стили для чекбоксов и радио */
+input[type="checkbox"] + label,
+input[type="radio"] + label {
+    display: inline-block;
+    margin-left: 0.3rem;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    width: 1.1em;
+    height: 1.1em;
+    vertical-align: middle;
+}
+
+/* Обновленные стили для кликабельных вариантов */
+#quizForm {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-top: 2rem;
+    max-width: 800px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Основной стиль для варианта - теперь вся карточка кликабельна */
+.form-group .form-item {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--light-gray);
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.form-group .form-item:hover {
+    background-color: #e0e0e0;
+    transform: translateX(5px);
+}
+
+/* Контейнер для содержимого варианта */
+.form-group .form-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    pointer-events: none; /* Чтобы клики проходили сквозь на родителя */
+}
+
+/* Кастомные чекбоксы */
+.form-group input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--primary-color);
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    transition: var(--transition);
+    flex-shrink: 0;
+    pointer-events: auto; /* Разрешаем события только для чекбокса */
+}
+
+.form-group input[type="checkbox"]:checked {
+    background-color: var(--primary-color);
+}
+
+.form-group input[type="checkbox"]:checked::after {
+    content: "✓";
+    position: absolute;
+    color: white;
+    font-size: 16px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Стиль для текста варианта */
+.form-group .form-row label {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    cursor: pointer;
+    margin: 0;
+    line-height: 1.4;
+    pointer-events: none; /* Отключаем события для label */
+    flex-grow: 1;
+}
+
+/* Скрытие оригинального текстового поля */
+.form-group input[type="text"]:disabled {
+    display: none;
+}
+
+/* Кнопка отправки и сообщение об ошибке (остаются без изменений) */
+#quizForm input[type="submit"] {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: var(--transition);
+    margin-top: 1rem;
+}
+
+#quizForm input[type="submit"]:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+#checkboxError {
+    color: var(--error-color);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    padding: 0.8rem;
+    background-color: rgba(230, 57, 70, 0.1);
+    border-radius: var(--border-radius);
+    display: none;
+}
+
+/* Анимации */
+@keyframes fadeInOption {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.form-group .form-item {
+    animation: fadeInOption 0.4s ease-out forwards;
+}
+
+.form-group .form-item:nth-child(1) { animation-delay: 0.1s; }
+.form-group .form-item:nth-child(2) { animation-delay: 0.2s; }
+.form-group .form-item:nth-child(3) { animation-delay: 0.3s; }
+.form-group .form-item:nth-child(4) { animation-delay: 0.4s; }
+.form-group .form-item:nth-child(5) { animation-delay: 0.5s; }
+
+/* Добавьте эти стили в ваш style.css */
+
+/* Общие стили для страницы результатов */
+.results-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.results-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.results-score {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin: 1rem 0;
+}
+
+/* Стили для контейнера вопроса */
+.question-container {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.question-title {
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+}
+
+.question-description {
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    font-weight: normal;
+}
+
+/* Стили для вариантов ответов */
+.variant {
+    padding: 1rem;
+    margin-bottom: 0.8rem;
+    border-radius: var(--border-radius);
+    border-left: 4px solid;
+    transition: var(--transition);
+    font-size: 1.1rem;
+}
+
+.variant-green, .variant-red, .variant-purple, .variant-default{
+    margin: 10px;
+    padding: 10px;
+}
+
+/* Стили для разных цветов ответов */
+.variant-green {
+    background-color: rgba(46, 204, 113, 0.1);
+    border-color: #2ecc71;
+    color: #27ae60;
+}
+
+.variant-red {
+    background-color: rgba(231, 76, 60, 0.1);
+    border-color: #e74c3c;
+    color: #c0392b;
+}
+
+.variant-purple {
+    background-color: rgba(155, 89, 182, 0.1);
+    border-color: #9b59b6;
+    color: #8e44ad;
+}
+
+.variant-default {
+    background-color: var(--light-gray);
+    border-color: #bdc3c7;
+    color: var(--text-color);
+}
+
+/* Разделитель между вопросами */
+.question-separator {
+    border: none;
+    height: 1px;
+    background-color: #eee;
+    margin: 2rem 0;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .results-container {
+        padding: 0 1rem;
+    }
+    
+    .question-container {
+        padding: 1rem;
+    }
+}
+
+/* Добавьте эти стили в ваш style.css */
+
+/* Стили для легенды */
+.legend {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.legend-title {
+    width: 100%;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.legend-label {
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+/* Цвета для легенды */
+.legend-green {
+    background-color: rgba(46, 204, 113, 0.2);
+    border: 2px solid #2ecc71;
+}
+
+.legend-red {
+    background-color: rgba(231, 76, 60, 0.2);
+    border: 2px solid #e74c3c;
+}
+
+.legend-purple {
+    background-color: rgba(155, 89, 182, 0.2);
+    border: 2px solid #9b59b6;
+}
+
+.legend-default {
+    background-color: var(--light-gray);
+    border: 2px solid #bdc3c7;
+}

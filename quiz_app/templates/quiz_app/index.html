@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 {% block title %}home{% endblock title %}
 {% block content %}
-<h1>{{question.title}}</h1>
-<h3>{{question.descripiton}}</h3>
-{% for quiz in quizes %}
-<a href="{{ quiz.get_absolute_url }}">
-    <h3>{{quiz.title}}</h3>
-    <p>{{quiz.descripiton}}</p>
-</a>
-{% endfor %}
+<div class="container">
+    <h1>{{question.title}}</h1>
+    <h3>{{question.descripiton}}</h3>
+    <div class="quiz-list">
+        {% for quiz in quizes %}
+        <a href="{{ quiz.get_absolute_url }}" class="quiz-item">
+            <h3>{{quiz.title}}</h3>
+            <p>{{quiz.descripiton}}</p>
+        </a>
+        {% endfor %}
+    </div>
+</div>
 {% endblock content %}

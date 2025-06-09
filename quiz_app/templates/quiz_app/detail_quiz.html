@@ -1,17 +1,60 @@
 {% extends "base.html" %}
 {% block title %}{{question.title}}{% endblock title %}
 {% block content %}
-<h1>{{question.title}}</h1>
-<h3>{{question.descripiton}}</h3>
-<form id="quizForm" action="{% url "question_processing" quiz.id form_num %}" method="POST">{% csrf_token %}
+<div class="container">
+    <h1>{{question.title}}</h1>
+    <h3>{{question.descripiton}}</h3>
+    <form id="quizForm" action="{% url 'question_processing' quiz.id form_num %}" method="POST">
+    {% csrf_token %}
     {{ formset.management_form }}
-    {{formset.as_p}}
+    <div class="form-group">
+        {% for form in formset %}
+        <div class="form-item" onclick="toggleCheckbox(this)">
+            <div class="form-row">
+                {{ form.checked }}
+                <label for="{{ form.checked.id_for_label }}">
+                    {{ form.text.value }}
+                </label>
+                {{ form.text }}
+                {{ form.id }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
     
-    <input type="submit" value="send">
-    <div id="checkboxError" style="margin-top: 5px; display: none;">Пожалуйста, выберите хотя бы один вариант</div>
+    <input type="submit" value="Отправить">
+    <div id="checkboxError">Пожалуйста, выберите хотя бы один вариант</div>
 </form>
+</div>
 
 <script>
+function toggleCheckbox(element) {
+    // Находим чекбокс внутри элемента
+    const checkbox = element.querySelector('input[type="checkbox"]');
+    if (checkbox) {
+        // Переключаем состояние чекбокса
+        checkbox.checked = !checkbox.checked;
+        
+        // Триггерим событие change для чекбокса
+        const event = new Event('change');
+        checkbox.dispatchEvent(event);
+    }
+}
+
+// Обработчик для обновления стилей при изменении состояния чекбокса
+document.querySelectorAll('.form-item input[type="checkbox"]').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        const formItem = this.closest('.form-item');
+        if (this.checked) {
+            formItem.style.backgroundColor = '#e0f7fa';
+            formItem.style.borderLeft = '4px solid var(--primary-color)';
+        } else {
+            formItem.style.backgroundColor = '';
+            formItem.style.borderLeft = '';
+        }
+    });
+});
+
 document.getElementById('quizForm').addEventListener('submit', function(e) {
 
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -48,3 +91,4 @@ document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
 });
 </script>
 {% endblock content %}
+

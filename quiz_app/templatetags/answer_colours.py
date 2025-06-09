@@ -12,5 +12,11 @@ def get_colour_of_answer(variant_id, question_id:int, user_answers, right_answer
     elif variant_id not in right_answers[str(question_id)] and variant_id in user_answers[str(question_id)]:
         return 'red'
     else:
-        return 'black'
+        return 'default'
+    
+@register.simple_tag()
+def get_right(question_id:int, user_answers, right_answers):
+    if right_answers[str(question_id)] == user_answers[str(question_id)]:
+        return 'green'
+    return 'red'
     
